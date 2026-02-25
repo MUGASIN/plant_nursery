@@ -1,0 +1,37 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Home - Plant Nursery{% endblock %}
+
+{% block content %}
+<!-- Categories -->
+<h2 class="mb-4">Plant Categories</h2>
+<div class="mb-5">
+    {% for category in categories %}
+        <a class="category-btn btn btn-outline-success"
+           href="{% url 'shop:category_plants' category.slug %}">
+           {{ category.name }}
+        </a>
+    {% endfor %}
+</div>
+
+<!-- All Plants -->
+<h2 class="mb-4">All Plants</h2>
+<div class="row">
+    {% for plant in plants %}
+    <div class="col-md-4">
+        <div class="plant-card card">
+            <img src="{{ plant.image.url }}" class="card-img-top" alt="{{ plant.name }}">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">
+                    <a href="{% url 'shop:plant_detail' plant.slug %}">{{ plant.name }}</a>
+                </h5>
+                <p class="card-text">{{ plant.description|truncatechars:100 }}</p>
+                <p class="fw-bold">₹{{ plant.price }}</p>
+                <a href="{% url 'cart:cart_add' plant.id %}" class="btn btn-success mt-auto">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+    

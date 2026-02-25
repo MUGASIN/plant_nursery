@@ -1,0 +1,53 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Your Shopping Cart{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🛒 Your Shopping Cart</h2>
+
+    {% if cart %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Plant</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>
+                        <img src="{{ item.plant.image.url }}" alt="{{ item.plant.name }}" width="80">
+                        {{ item.plant.name }}
+                    </td>
+                    <td>₹{{ item.price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.total_price }}</td>
+                    <td>
+                        <a href="{% url 'cart:cart_remove' item.plant.id %}" class="btn btn-danger btn-sm">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3" class="text-end"><strong>Total</strong></td>
+                    <td colspan="2"><strong>₹{{ cart.get_total_price }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-end">
+            <a href="{% url 'orders:order_create' %}" class="btn btn-success">
+                Proceed to Checkout
+            </a>
+        </div>
+    {% else %}
+        <p>Your cart is empty. <a href="{% url 'shop:home' %}">Continue shopping</a></p>
+    {% endif %}
+</div>
+{% endblock %}

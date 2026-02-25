@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>Pay with Razorpay</h2>
+    <p>Order ID: {{ order.id }}</p>
+    <p><strong>Total Amount: ₹{{ cart.get_total_price }}</strong></p>
+
+    <!-- Razorpay Checkout Button -->
+    <form action="/orders/payment_success/{{ order.id }}/" method="POST">
+        {% csrf_token %}
+        <script
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="{{ razorpay_key }}"
+            data-amount="{{ total_amount }}"
+            data-currency="INR"
+            data-order_id="{{ razorpay_order_id }}"
+            data-buttontext="Pay with Razorpay"
+            data-name="Online Plant Nursery"
+            data-description="Plant Purchase"
+            data-theme.color="#4CAF50">
+        </script>
+    </form>
+</div>
+{% endblock %}

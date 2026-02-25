@@ -1,0 +1,12 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>Thank you for your order!</h2>
+    <p>Your order ID is: <strong>{{ order.id }}</strong></p>
+    {% if order.payment_method == "COD" %}
+        <p>You selected <b>Cash on Delivery</b>. Please pay when your order arrives.</p>
+    {% else %}
+        <p>Your Razorpay payment was successful!</p>
+    {% endif %}
+</div>
+{% endblock %}

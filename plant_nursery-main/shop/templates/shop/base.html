@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Plant Nursery{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding-top: 70px; background-color: #f0f8f5; }
+        .navbar { background-color: #28a745; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .navbar-brand { font-weight: bold; font-size: 1.75rem; color: #fff !important; }
+        .navbar-nav .nav-link { color: #fff !important; margin-left: 15px; }
+        .navbar-nav .nav-link:hover { color: #d4f5d4 !important; }
+        .navbar-toggler { border-color: #fff; }
+        .navbar-toggler-icon { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); }
+        .navbar-nav .active { font-weight: bold; }
+        .navbar-nav .nav-link { font-size: 18px; font-weight:bold; border : 2px solid white;  border-radius: 20px; transition: background-color 0.3s, color 0.3s;  }
+        .navbar-nav .nav-link:hover { background-color: #fff; color: #28a745 !important; }
+
+        .category-btn { margin:5px 5px 20px 0; font-weight:bold; font-size:1.1rem; padding:10px 20px; border-radius:25px; border:2px solid #28a745; background-color:#fff; color:#28a745; transition: all 0.3s; }
+        .category-btn:hover { background-color:#28a745; color:#fff; }
+        .plant-card { border:none; border-radius:15px; overflow:hidden; box-shadow:0 6px 15px rgba(0,0,0,0.1); transition:transform 0.3s, box-shadow 0.3s; display:flex; flex-direction:column; background-color:#fff; margin-bottom:30px; }
+        .plant-card:hover { transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15); }
+        .plant-card img { width:100%; height:400px; object-fit:cover; transition:transform 0.3s; }
+        .plant-card img:hover { transform:scale(1.05); }
+        .plant-card .card-body { padding:20px; display:flex; flex-direction:column; justify-content:space-between; }
+        .plant-card .card-title { font-size:1.4rem; font-weight:bold; margin-bottom:10px; color:#28a745; }
+        .plant-card .card-text { flex-grow:1; color:#6c757d; font-size:0.95rem; }
+        .plant-card .btn { font-size:1.1rem; padding:10px 20px; border-radius:25px; background-color:#28a745; border:none; color:#fff; transition: background-color 0.3s, transform 0.2s; }
+        .plant-card .btn:hover { background-color:#218838; transform:translateY(-2px); }
+        .footer { text-align:center; padding:25px; background-color:#28a745; color:white; margin-top:40px; border-radius:0 0 15px 15px; }
+        .footer a { color:#fff; text-decoration:underline; }
+        .footer a:hover { color:#d4f5d4; }
+        @media (max-width: 768px) {
+            .plant-card img { height:250px; }
+            .navbar-brand { font-size:1.5rem; }
+            .category-btn { font-size:1rem; padding:8px 16px; }
+        }
+        @media (max-width: 480px) {
+            .plant-card img { height:200px; }
+            .navbar-brand { font-size:1.25rem; }
+            .category-btn { font-size:0.9rem; padding:6px 12px; }
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'shop:home' %}">🌿 Plant Nursery</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:home' %}">
+                        🏠 Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                        🛒 Cart
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'orders:order_list' %}">
+                        📦 View Orders
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'orders:order_create' %}">
+                        📝 Checkout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% block content %}{% endblock %}
+</div>
+
+<div class="footer">&copy; 2025 🌿 Plant Nursery | <a href="#">Contact Us</a></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

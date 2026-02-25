@@ -1,0 +1,81 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>📦 Your Orders</h2>
+    <hr>
+
+    {% if orders %}
+        <div class="table-responsive">
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-success">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Items</th>
+                    <th>Total Cost</th>
+                    <th>Status</th>   <!-- ✅ Added -->
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><strong>{{ order.id }}</strong></td>
+                    <td>{{ order.first_name }} {{ order.last_name }}</td>
+                    <td>{{ order.email }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.city }}</td>
+
+                    <td>
+                        {% for item in order.items.all %}
+                            <div class="d-flex align-items-center mb-2">
+                                {% if item.plant.image %}
+                                    <img src="{{ item.plant.image.url }}" 
+                                         width="60" height="60"
+                                         class="me-2 rounded"
+                                         style="object-fit: cover;">
+                                {% endif %}
+                                <div>
+                                    🌿 {{ item.plant.name }} <br>
+                                    <small>Qty: {{ item.quantity }}</small>
+                                </div>
+                            </div>
+                        {% empty %}
+                            No items
+                        {% endfor %}
+                    </td>
+
+                    <td><strong>₹{{ order.get_total_cost }}</strong></td>
+
+                    <!-- ✅ Status with Color -->
+                    <td>
+                        {% if order.status == "Pending" %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif order.status == "Processing" %}
+                            <span class="badge bg-info">Processing</span>
+                        {% elif order.status == "Shipped" %}
+                            <span class="badge bg-primary">Shipped</span>
+                        {% elif order.status == "Delivered" %}
+                            <span class="badge bg-success">Delivered</span>
+                        {% elif order.status == "Cancelled" %}
+                            <span class="badge bg-danger">Cancelled</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ order.created|date:"d M Y, h:i A" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No orders placed yet.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

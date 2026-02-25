@@ -1,0 +1,39 @@
+{% extends "shop/base.html" %}
+
+{% block title %}{{ category.name }} - Plant Nursery{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🌿 {{ category.name }}</h2>
+
+    {% if plants %}
+        <div class="row">
+            {% for plant in plants %}
+                <div class="col-md-4">
+                    <div class="card plant-card">
+                        {% if plant.image %}
+                            <img src="{{ plant.image.url }}" class="card-img-top img-fluid" alt="{{ plant.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/400x300?text=No+Image" class="card-img-top img-fluid" alt="No Image">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ plant.name }}</h5>
+                            <p class="card-text">{{ plant.description|truncatewords:15 }}</p>
+                            <p class="fw-bold">₹{{ plant.price }}</p>
+                            <a href="{% url 'shop:plant_detail' plant.slug %}" class="btn btn-outline-success">
+                                View Details
+                            </a>
+                            <a href="{% url 'cart:cart_add' plant.id %}" class="btn btn-success mt-2">
+                                Add to Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No plants found in this category.</p>
+    {% endif %}
+</div>
+{% endblock %}

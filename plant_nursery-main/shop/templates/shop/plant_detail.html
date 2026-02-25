@@ -1,0 +1,19 @@
+{% extends "shop/base.html" %}
+{% block title %}{{ plant.name }} - Plant Nursery{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <img src="{{ plant.image.url }}" alt="{{ plant.name }}" class="img-fluid">
+
+    </div>
+    <div class="col-md-6">
+        <h2>{{ plant.name }}</h2>
+        <p class="fw-bold">Price: ₹{{ plant.price }}</p>
+        <p>{{ plant.description }}</p>
+        <p>Stock: {{ plant.stock }}</p>
+        <a href="{% url 'cart:cart_add' plant.id %}" class="btn btn-primary">Add to Cart</a>
+        <a href="{% url 'shop:home' %}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

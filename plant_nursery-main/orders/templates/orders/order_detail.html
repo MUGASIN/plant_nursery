@@ -1,0 +1,69 @@
+{% extends "shop/base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Order Details</h2>
+
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
+    <p><strong>Email:</strong> {{ order.email }}</p>
+    <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}</p>
+    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+    <p><strong>Status:</strong>
+        {% if order.paid %}
+            <span class="text-success">Paid</span>
+        {% else %}
+            <span class="text-danger">Pending</span>
+        {% endif %}
+    </p>
+
+    <hr>
+
+    <h4>Ordered Items</h4>
+    <ul class="list-group mb-3">
+        {% for item in order.items.all %}
+        <li class="list-group-item d-flex justify-content-between">
+            {{ item.plant.name }} ({{ item.quantity }})
+            <span>₹{{ item.get_cost }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5 class="text-end">Total: ₹{{ order.get_total_cost }}</h5>
+</div>
+
+{% endblock %}{% extends "shop/base.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Order Details</h2>
+
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
+    <p><strong>Email:</strong> {{ order.email }}</p>
+    <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}</p>
+    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+    <p><strong>Status:</strong>
+        {% if order.paid %}
+            <span class="text-success">Paid</span>
+        {% else %}
+            <span class="text-danger">Pending</span>
+        {% endif %}
+    </p>
+
+    <hr>
+
+    <h4>Ordered Items</h4>
+    <ul class="list-group mb-3">
+        {% for item in order.items.all %}
+        <li class="list-group-item d-flex justify-content-between">
+            {{ item.plant.name }} ({{ item.quantity }})
+            <span>₹{{ item.get_cost }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h5 class="text-end">Total: ₹{{ order.get_total_cost }}</h5>
+</div>
+
+{% endblock %}
